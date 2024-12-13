@@ -3,6 +3,7 @@ import { customError } from '../../utils/customError';
 import { userServices } from '../../services/user/user-services';
 import { verifyPassword } from '../../utils/jwt/bcrypt-password';
 import { generateToken } from '../../utils/jwt/jwt-token';
+import { config } from '../../config';
 
 export const userLogin = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -24,6 +25,8 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
 		// set Cookies
 		res.cookie('token', token, {
 			httpOnly: true,
+			secure: config.NODE_ENV === 'production',
+			sameSite: config.NODE_ENV === 'production' ? 'none' : 'strict',
 			maxAge: 24 * 60 * 60 * 1000,
 		});
 

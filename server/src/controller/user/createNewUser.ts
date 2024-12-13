@@ -3,7 +3,7 @@ import { customError } from '../../utils/customError';
 import { userServices } from '../../services/user/user-services';
 import { generateToken } from '../../utils/jwt/jwt-token';
 import { passwordToHash } from '../../utils/jwt/bcrypt-password';
-// import { config } from '../../config';
+import { config } from '../../config';
 
 export const createNewUser = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -20,9 +20,12 @@ export const createNewUser = async (req: Request, res: Response, next: NextFunct
 
 			const token = generateToken(user._id);
 
+			// set Cookie
 			res.cookie('token', token, {
 				httpOnly: true,
 				maxAge: 24 * 60 * 60 * 1000,
+				secure: config.NODE_ENV === 'production',
+				sameSite: config.NODE_ENV === 'production' ? 'strict' : 'none',
 			});
 
 			res.status(200).json({ message: 'user created successfully' });
