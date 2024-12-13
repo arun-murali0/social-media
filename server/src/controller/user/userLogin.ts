@@ -9,7 +9,7 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
 	try {
 		const { email, password } = req.body;
 
-		const user = await userServices.emailService(email);
+		const user = await userServices.getByEmail(email);
 		if (!user) {
 			throw new customError(401, 'user Not Found');
 		}

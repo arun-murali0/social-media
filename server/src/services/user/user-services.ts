@@ -6,7 +6,7 @@ export const userServices = {
 		return await userRepository.create(userData);
 	},
 
-	emailService: async (email: string) => {
+	getByEmail: async (email: string) => {
 		return await userRepository.findByEmail(email);
 	},
 

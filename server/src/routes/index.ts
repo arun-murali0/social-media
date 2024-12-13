@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { createNewUser, userLogin, userLogOut } from '../controller';
 
+// schema
 import { validateSchema } from '../middleware/input-validation';
 import { loginSchema } from '../utils/validation/login-schema';
 

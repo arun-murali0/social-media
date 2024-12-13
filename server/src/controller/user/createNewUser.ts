@@ -8,7 +8,7 @@ import { config } from '../../config';
 export const createNewUser = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const user = req.body;
-		const checkUser = await userServices.emailService(user.email);
+		const checkUser = await userServices.getByEmail(user.email);
 
 		if (checkUser) {
 			throw new customError(400, 'User already registered');
