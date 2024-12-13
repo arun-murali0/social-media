@@ -19,6 +19,26 @@ const userDetails = new mongoose.Schema<UserProp>({
 		type: String,
 		required: true,
 	},
+	isAccountVerified: {
+		type: Boolean,
+		default: false,
+	},
+	verifyOtp: {
+		type: String,
+		default: '',
+	},
+	verifyOtpExpiryAt: {
+		type: Number,
+		default: 0,
+	},
+	resetOtp: {
+		type: String,
+		default: '',
+	},
+	resetOtpExpiryAt: {
+		type: Number,
+		default: 0,
+	},
 });
 
 export const User = mongoose.model<UserProp>('User', userDetails);
