@@ -28,7 +28,7 @@ export const createNewUser = async (req: Request, res: Response, next: NextFunct
 				sameSite: config.NODE_ENV === 'production' ? 'strict' : 'none',
 			});
 
-			res.status(200).json({ message: 'user created successfully' });
+			res.status(200).json({ success: true, message: 'user created successfully' });
 		}
 	} catch (error) {
 		console.error({ error: error.message });

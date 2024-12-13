@@ -5,13 +5,13 @@ import { ZodError } from 'zod';
 export const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
 	// custom error
 	if (err instanceof customError) {
-		return res.status(err.errorCode).json({ error: err.errorMessage });
+		return res.status(err.errorCode).json({ success: 'false', error: err.errorMessage });
 	}
 
 	// zod validation error
 	if (err instanceof ZodError) {
 		return res.status(400).json({
-			message: 'validation error',
+			success: 'false',
 			error: err.errors.map((issue) => {
 				const field = issue.path.join('.');
 				return `${field}:-> reason: ${issue.message}`;
@@ -21,9 +21,11 @@ export const errorHandler = (err: unknown, _req: Request, res: Response, _next: 
 
 	// system error
 	if (err instanceof Error) {
-		return res.status(500).json({ error: err.message || 'Internal Server Error' });
+		return res
+			.status(500)
+			.json({ success: 'false', error: err.message || 'Internal Server Error' });
 	}
 
 	// default error
-	return res.status(500).json({ error: 'Something went wrong' });
+	return res.status(500).json({ success: 'false', error: 'Something went wrong' });
 };
