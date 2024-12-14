@@ -4,9 +4,12 @@ export interface UserProp {
 	lastName: string;
 	email: string;
 	password: string;
-	verifyOtp?: string;
-	isAccountVerified?: boolean;
-	resetOtp?: string;
-	resetOtpExpiryAt?: number;
-	verifyOtpExpiryAt?: number;
+	isAccountVerified: boolean;
+}
+
+export interface emailProp {
+	to: string;
+	subject: string;
+	text: string;
+	html?: string;
 }

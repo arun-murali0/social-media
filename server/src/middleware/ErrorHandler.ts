@@ -13,8 +13,7 @@ export const errorHandler = (err: unknown, _req: Request, res: Response, _next: 
 		return res.status(400).json({
 			success: 'false',
 			error: err.errors.map((issue) => {
-				const field = issue.path.join('.');
-				return `${field}:-> reason: ${issue.message}`;
+				return `${issue.message}`;
 			}),
 		});
 	}

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createNewUser, userLogin, userLogOut } from '../controller';
+import { createNewUser, userLogin, userLogOut, verifyUser } from '../controller';
 
 // schema
 import { validateSchema } from '../middleware/input-validation';
@@ -11,5 +11,6 @@ const router = Router();
 router.post('/sign-up', createNewUser);
 router.post('/sign-in', validateSchema(loginSchema), userLogin);
 router.post('/sign-out', userLogOut);
+router.post('/verify-otp', verifyUser);
 
 export default router;

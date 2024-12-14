@@ -21,9 +21,17 @@ export const createNewUser = async (req: Request, res: Response, next: NextFunct
 			const token = generateToken(user._id);
 
 			// set Cookie
-			res.cookie('token', token, {
+			res.cookie('accessToken', token.accessToken, {
 				httpOnly: true,
-				maxAge: 24 * 60 * 60 * 1000,
+				maxAge: 15 * 50 * 60 * 1000,
+				secure: config.NODE_ENV === 'production',
+				sameSite: config.NODE_ENV === 'production' ? 'strict' : 'none',
+			});
+
+			// set Cookie
+			res.cookie('refreshToken', token.refreshToken, {
+				httpOnly: true,
+				maxAge: 3 * 24 * 50 * 60 * 1000,
 				secure: config.NODE_ENV === 'production',
 				sameSite: config.NODE_ENV === 'production' ? 'strict' : 'none',
 			});
