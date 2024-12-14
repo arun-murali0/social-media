@@ -7,9 +7,14 @@ export interface UserProp {
 	isAccountVerified: boolean;
 }
 
-export interface emailProp {
-	to: string;
+export interface EmailTemplateProp {
 	subject: string;
 	text: string;
 	html?: string;
+}
+
+export interface EmailOptionProp {
+	to: string;
+	type?: any;
+	params: any;
 }

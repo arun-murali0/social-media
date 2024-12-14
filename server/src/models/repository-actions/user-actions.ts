@@ -11,6 +11,6 @@ export const userRepository = {
 	},
 
 	findById: async (id: string): Promise<UserProp | null> => {
-		return await User.findOne({ _id: id }).exec();
+		return await User.findById({ _id: id });
 	},
 };

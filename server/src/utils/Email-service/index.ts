@@ -1,7 +1,5 @@
 import nodeMailer from 'nodemailer';
 import { config } from '../../config';
-import { customError } from '../customError';
-import { emailProp } from '../../types';
 
 // email config
 export const transporter = nodeMailer.createTransport({
@@ -14,18 +12,23 @@ export const transporter = nodeMailer.createTransport({
 } as nodeMailer.TransportOptions);
 
 // send email
-export const sendMail = async ({ to, subject, text, html }: emailProp) => {
-	try {
-		await transporter.sendMail({
-			from: config.SENDER_EMAIL,
-			to,
-			subject,
-			text,
-			html,
-		});
-		console.info('email send successfully');
-	} catch (error) {
-		console.error(error);
-		throw new customError(400, error.message);
-	}
-};
+// export const sendMail = async ({ to, params, type }: EmailOptionProp) => {
+// 	const template = emailTemplates.filter((emailTemplate) => {
+// 		() => {
+// 			const keys = Object.keys(emailTemplate);
+// 			console.log(keys);
+// 		};
+// 	});
+
+// 	try {
+// 		await transporter.sendMail({
+// 			from: config.SENDER_EMAIL,
+// 			to,
+// 			html: template.,
+// 		});
+// 		console.info('email send successfully');
+// 	} catch (error) {
+// 		console.error(error);
+// 		throw new customError(400, error.message);
+// 	}
+// };
