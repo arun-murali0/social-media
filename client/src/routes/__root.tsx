@@ -1,12 +1,8 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router';
-import {TanStackRouterDevtools} from "@tanstack/router-devtools"
+import { createRootRoute } from '@tanstack/react-router';
 
-export const Route = createRootRoute({
-	component: () => {
-		<>
-			<h1>Stack</h1>
-			<Outlet />
-			<TanStackRouterDevtools/>
-		</>;
-	},
-});
+export const rootRoute = createRootRoute();
+
+import { indexRoute, LoginRoute, RegisterRoute } from './routes';
+
+// root tree
+export const routeTree = rootRoute.addChildren([indexRoute, LoginRoute, RegisterRoute]);
