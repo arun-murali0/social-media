@@ -1,24 +1,41 @@
 import { createRoute } from '@tanstack/react-router';
 import { rootRoute } from './__root';
+import { lazy } from 'react';
+import LazyLayout from '../components/layouts/RouterLayout';
 
-import { App } from '../App';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
+// lazy load
+const Register = lazy(() => import('../pages/Register'));
+const App = lazy(() => import('../App'));
+const Login = lazy(() => import('../pages/Login'));
 
-export const indexRoute = createRoute({
+const indexRoute = createRoute({
 	getParentRoute: () => rootRoute,
 	path: '/',
-	component: App,
+	component: () => (
+		<LazyLayout>
+			<App />
+		</LazyLayout>
+	),
 });
 
-export const LoginRoute = createRoute({
+const LoginRoute = createRoute({
 	getParentRoute: () => rootRoute,
 	path: '/sign-in',
-	component: Login,
+	component: () => (
+		<LazyLayout>
+			<Login />
+		</LazyLayout>
+	),
 });
 
-export const RegisterRoute = createRoute({
+const RegisterRoute = createRoute({
 	getParentRoute: () => rootRoute,
 	path: '/sign-up',
-	component: Register,
+	component: () => (
+		<LazyLayout>
+			<Register />
+		</LazyLayout>
+	),
 });
+
+export const childRoute = [indexRoute, LoginRoute, RegisterRoute];

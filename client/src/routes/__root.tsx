@@ -1,8 +1,19 @@
-import { createRootRoute } from '@tanstack/react-router';
+import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { childRoute } from './routes';
+import Navbar from '@/components/layouts/Navbar';
 
-export const rootRoute = createRootRoute();
-
-import { indexRoute, LoginRoute, RegisterRoute } from './routes';
+export const rootRoute = createRootRoute({
+	component: () => {
+		return (
+			<>
+				<Navbar />
+				<main>
+					<Outlet />
+				</main>
+			</>
+		);
+	},
+});
 
 // root tree
-export const routeTree = rootRoute.addChildren([indexRoute, LoginRoute, RegisterRoute]);
+export const routeTree = rootRoute.addChildren([...childRoute]);

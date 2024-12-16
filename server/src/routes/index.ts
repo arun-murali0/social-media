@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Request, Response, Router } from 'express';
 import { createNewUser, userLogin, userLogOut, verifyUser, resetPassword } from '../controller';
 
 // middleware
@@ -18,5 +18,9 @@ router.post('/verify-otp', verifyUser);
 // protected user Routes
 router.post('/sign-out', checkUserAuth, userLogOut);
 router.post('/reset-password', checkUserAuth, resetPassword);
+
+router.get('/profile', (_req: Request, res: Response) => {
+	return res.status(200).json({ success: true, message: 'Hello world' });
+});
 
 export default router;
