@@ -1,6 +1,6 @@
 import { FetchData, mutateData } from '@/services/Queries';
 
-export const useDataQuery = (queryFn: <T>() => Promise<T>, queryKey: readonly unknown[]) => {
+export const useDataQuery = <T,>(queryFn:() => Promise<T>, queryKey: readonly T[]) => {
 	const { data, isLoading, isError } = FetchData(queryFn, queryKey);
 
 	return { data, isError, isLoading };

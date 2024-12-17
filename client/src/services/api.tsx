@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 const axiosInstance = axios.create({ baseURL: 'http://localhost:4000' });
 
 interface apiProp {
-	endPoints: 'post' | 'delete' | 'put';
+	endPoints: 'post' | 'delete' | 'put' | 'get';
 	data?: any;
 	id?: string;
 	urlEndpoint: string;
@@ -26,6 +26,7 @@ export const ApiService = async <T,>({ endPoints, data, id, urlEndpoint }: apiPr
 				break;
 			default:
 				response = await axiosInstance.get<T>(url);
+				break;
 		}
 		return response.data;
 	} catch (error) {
