@@ -1,6 +1,13 @@
+import {ApiService} from "./services/api"
+import {useDataQuery} from "./hooks/usefetchData"
 
 const App = () => {
-	return <h1>Hi</h1>;
+	const {}=useDataQuery(ApiService({endPoints:"get",urlEndpoint:"/profile"}),"user")
+	return (
+
+
+
+	)
 };
 
 export default App;
