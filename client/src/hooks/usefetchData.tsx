@@ -1,13 +1,38 @@
-import { FetchData, mutateData } from '@/services/Queries';
+import { fetchDataQuery, mutateData } from '@/services/Queries';
 
-export const useDataQuery = <T,>(queryFn:() => Promise<T>, queryKey: readonly T[]) => {
-	const { data, isLoading, isError } = FetchData(queryFn, queryKey);
+interface useFetchProps<T> {
+	queryFn: () => Promise<T>;
+	queryKeys: string[];
+}
+
+interface useMutateProps<T, V> {
+	mutateFn: (data: V) => Promise<T>;
+	queryKey?: string[];
+	shouldInvalidation?: boolean | ((data: T) => boolean);
+	onSuccess?: (data: T) => void;
+}
+
+export const useFetchData = <T,>({ queryFn, queryKeys }: useFetchProps<T>) => {
+	const { data, isError, isLoading } = fetchDataQuery({
+		queryFn,
+		queryKeys,
+	});
 
 	return { data, isError, isLoading };
 };
 
-export const useMutateData = <T, V>(mutationFn: (variable: V) => Promise<T>) => {
-	const { isError, isPending, mutate, error, mutateAsync } = mutateData<T, V>(mutationFn);
+export const useMutateData = <T, V>({
+	mutateFn,
+	queryKey,
+	shouldInvalidation,
+	onSuccess,
+}: useMutateProps<T, V>) => {
+	const { data, isPending, isSuccess } = mutateData<T, V>({
+		mutationFn: mutateFn,
+		queryKey: queryKey,
+		shouldInvalidation: shouldInvalidation!,
+		onSuccess: onSuccess!,
+	});
 
-	return { mutate, isError, isPending, error, mutateAsync };
+	return { data, isPending, isSuccess };
 };

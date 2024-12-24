@@ -1,56 +1,59 @@
 import {
 	useQuery,
-	QueryClient,
 	useMutation,
-	QueryFunction,
 	QueryKey,
-	UseQueryOptions,
+	QueryFunction,
+	QueryOptions,
+	QueryClient,
+	UseQueryResult,
+	UseMutationResult,
 } from '@tanstack/react-query';
 
-export const FetchData = (
-	queryFn: QueryFunction,
-	queryKey: QueryKey,
-	options?: UseQueryOptions
-) => {
+interface queryProps<T> {
+	queryKeys: QueryKey;
+	queryFn: QueryFunction<T>;
+	options?: QueryOptions;
+}
+
+interface mutationProps<T, V> {
+	queryKey?: string | string[];
+	onSuccess: (data: T) => void;
+	mutationFn: (data: V) => Promise<T>;
+	shouldInvalidation: boolean | ((data: T) => boolean);
+}
+
+export const fetchDataQuery = <T,>({ options, queryFn, queryKeys }: queryProps<T>): UseQueryResult => {
 	const result = useQuery({
-		queryKey,
-		queryFn,
+		queryKey: queryKeys,
+		queryFn: queryFn,
 		...options,
 	});
-
 	return result;
 };
 
-export const mutateData = <T, V>(
-	mutationFn: (variable: V) => Promise<T>,
-	onSuccess?: (data: T) => void,
-	queryKey?: string | string[],
-	shouldInvalidate?: boolean | ((data: T) => boolean)
-) => {
+export const mutateData = <T, V>({
+	mutationFn,
+	shouldInvalidation,
+	queryKey,
+	onSuccess,
+}: mutationProps<T, V>): UseMutationResult<T, unknown, V, unknown> => {
 	const queryClient = new QueryClient();
 
 	const mutate = useMutation<T, unknown, V>({
-		mutationFn,
+		mutationFn: mutationFn,
 		onSuccess: (data) => {
-			if (queryKey && shouldInvalidate) {
+			if (queryKey && shouldInvalidation) {
 				const shouldInvalidateResult =
-					typeof shouldInvalidate === 'function' ? shouldInvalidate(data) : shouldInvalidate;
-
+					typeof shouldInvalidation === 'function' ? shouldInvalidation(data) : shouldInvalidation;
 				if (shouldInvalidateResult) {
 					queryClient.invalidateQueries({ queryKey });
 				}
-			}
-			if (onSuccess) {
-				onSuccess(data);
+				if (onSuccess) {
+					onSuccess(data);
+				}
 			}
 		},
 	});
 
-	return {
-		mutate,
-		isPending: mutate.isPending,
-		isError: mutate.isError,
-		mutateAsync: mutate.mutateAsync,
-		error: mutate.error,
-	};
+	return mutate;
 };

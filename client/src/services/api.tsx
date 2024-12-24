@@ -1,34 +1,39 @@
 import axios, { AxiosResponse } from 'axios';
+
 const axiosInstance = axios.create({ baseURL: 'http://localhost:4000' });
 
-interface apiProp {
-	endPoints: 'post' | 'delete' | 'put' | 'get';
-	data?: any;
+interface apiServicesProps {
 	id?: string;
-	urlEndpoint: string;
+	urlEndpointsAddress: string;
+	endpointsMethods: 'get' | 'post' | 'put' | 'delete';
+	data?: any;
 }
 
-export const ApiService = async <T,>({ endPoints, data, id, urlEndpoint }: apiProp) => {
-	const url = id ? `${urlEndpoint}/${id}` : urlEndpoint;
-
+export const apiServices = async <T,>({
+	data,
+	endpointsMethods,
+	urlEndpointsAddress,
+	id,
+}: apiServicesProps) => {
+	const url = id ? `${urlEndpointsAddress}/${id}` : `${urlEndpointsAddress}`;
 	try {
 		let response: AxiosResponse<T>;
-
-		switch (endPoints) {
-			case 'delete':
-				response = await axiosInstance.delete<T>(url, { data });
-				break;
+		switch (endpointsMethods) {
 			case 'post':
 				response = await axiosInstance.post<T>(url, data);
 				break;
 			case 'put':
 				response = await axiosInstance.put<T>(url, data);
 				break;
+			case 'delete':
+				response = await axiosInstance.delete<T>(url);
+				break;
 			default:
 				response = await axiosInstance.get<T>(url);
 				break;
 		}
-		return response.data;
+
+		return response;
 	} catch (error) {
 		console.error(error);
 		throw error;
