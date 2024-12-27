@@ -9,7 +9,7 @@ export const userSchema = (type: string) => {
 		lastName:
 			type === 'sign-up'
 				? z.string().optional()
-				: z.string().min(3, { message: 'firstName should contain atleast 3 character' }),
+				: z.string().min(3, { message: 'lastName should contain atleast 3 character' }),
 
 		// login
 		email: z.string().min(1, { message: 'please enter Email' }).email(),

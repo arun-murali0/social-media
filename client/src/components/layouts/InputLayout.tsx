@@ -21,13 +21,13 @@ const InputLayout = ({ name, placeholder, control, label }: InputProp) => {
 				control={control}
 				name={name}
 				render={({ field }) => (
-					<FormItem>
-						<FormLabel>{label}</FormLabel>
+					<FormItem className="md:my-2 my-1">
+						<FormLabel className="sm:text-sm lg:text-md">{label}</FormLabel>
 						<div className="flex flex-col w-full">
 							<FormControl>
 								<Input placeholder={placeholder} {...field} type="text" />
 							</FormControl>
-							<FormMessage />
+							<FormMessage className="md:my-2 max-sm:my-1" />
 						</div>
 					</FormItem>
 				)}

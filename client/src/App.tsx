@@ -1,23 +1,13 @@
-import { apiServices } from './services/api';
-import { useFetchData } from '@/hooks/usefetchData';
+import Navbar from '@/components/layouts/Navbar';
 
 const App = () => {
-	const queryFn = apiServices({ endpointsMethods: 'get', urlEndpointsAddress: '/profile' });
-
-	const { data, isError, isLoading } = useFetchData({
-		queryFn: () => queryFn,
-		queryKeys: ['user'],
-	});
-
-	if (isError) {
-		console.log(isError);
-	}
-
-	if (isLoading) {
-		console.log('loading.....');
-	}
-
-	return <div>{JSON.stringify(data)}</div>;
+	return (
+		<main className="container max-w-full h-screen overflow-x-hidden ">
+			<div className="h-full">
+				<Navbar />
+			</div>
+		</main>
+	);
 };
 
 export default App;

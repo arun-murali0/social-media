@@ -64,10 +64,3 @@
 		@apply bg-background text-foreground;
 	}
 }
-
-@layer utilities {
-	/**** --card --****/
-	.card {
-		@apply max-h-fit lg:max-w-96 md:max-w-[364px]  sm:max-w-[364px];
-	}
-}

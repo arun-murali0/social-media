@@ -1,6 +1,16 @@
-import { createRootRoute } from '@tanstack/react-router';
+import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { routeChildren } from './Routes';
 
-export const rootRoute = createRootRoute();
+const RootComponent = () => {
+	return (
+		<>
+			<Outlet />
+		</>
+	);
+};
+
+export const rootRoute = createRootRoute({
+	component: RootComponent,
+});
 
 export const routeTree = rootRoute.addChildren([...routeChildren]);

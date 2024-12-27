@@ -13,7 +13,7 @@ interface meth {
 	type?: string | undefined;
 }
 
-const Login = ({ type }: meth) => {
+const AuthForm = ({ type }: meth) => {
 	const authForm = userSchema('');
 	const form = useForm<z.infer<typeof authForm>>({
 		resolver: zodResolver(userSchema('')),
@@ -30,11 +30,11 @@ const Login = ({ type }: meth) => {
 	};
 
 	return (
-		<section className="p-2">
-			<Card className="card">
+		<section className="h-screen flex justify-center items-center">
+			<Card className="md:w-96">
 				<CardHeader>
 					<CardTitle className="text-lg max-sm:text-md text-center">
-						{type === 'sign-up' ? 'Register' : 'Login'}
+						{type === 'sign-up' ? 'Sign Up' : 'Sign In'}
 					</CardTitle>
 				</CardHeader>
 				<Form {...form}>
@@ -70,13 +70,15 @@ const Login = ({ type }: meth) => {
 								label="Password"
 							/>
 						</CardContent>
-						<CardFooter>
-							<Button>submit</Button>
+						<CardFooter className="flex flex-col gap-2">
+							<Button className="w-full">submit</Button>
 							<div>
-								New user?
-								<Link>
+								<span className="max-md:text-sm">
+									{type === 'sign-up' ? 'Already have an account ?' : 'New User ?'}
+								</span>
+								<Link className="mx-1" href={type === 'sign-up' ? '/sign-in' : '/sign-up'}>
 									<span className="text-blue-600">
-										{type === 'sign-up' ? 'sign-up' : 'sign-in'}
+										{type === 'sign-up' ? 'sign-in' : 'sign-up'}
 									</span>
 								</Link>
 							</div>
@@ -88,4 +90,4 @@ const Login = ({ type }: meth) => {
 	);
 };
 
-export default Login;
+export default AuthForm;

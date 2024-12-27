@@ -4,8 +4,7 @@ import { createRoute } from '@tanstack/react-router';
 import LazyLayout from '../components/layouts/RouterLayout';
 
 const App = lazy(() => import('../App'));
-const Login = lazy(() => import('../pages/Login'));
-const Register = lazy(() => import('../pages/Register'));
+const AuthForm = lazy(() => import('../pages/auth'));
 
 const indexRoute = createRoute({
 	getParentRoute: () => rootRoute,
@@ -22,7 +21,7 @@ const loginRoute = createRoute({
 	path: '/sign-in',
 	component: () => (
 		<LazyLayout>
-			<Login />
+			<AuthForm type="sign-in" />
 		</LazyLayout>
 	),
 });
@@ -32,7 +31,7 @@ const registerRoute = createRoute({
 	path: '/sign-up',
 	component: () => (
 		<LazyLayout>
-			<Register />
+			<AuthForm type='sign-up'/>
 		</LazyLayout>
 	),
 });
