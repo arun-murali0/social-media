@@ -27,12 +27,12 @@ export const useMutateData = <T, V>({
 	shouldInvalidation,
 	onSuccess,
 }: useMutateProps<T, V>) => {
-	const { data, isPending, isSuccess } = mutateData<T, V>({
+	const { data, isPending, isSuccess, mutateAsync } = mutateData<T, V>({
 		mutationFn: mutateFn,
 		queryKey: queryKey,
 		shouldInvalidation: shouldInvalidation!,
 		onSuccess: onSuccess!,
 	});
 
-	return { data, isPending, isSuccess };
+	return { data, isPending, isSuccess, mutateAsync };
 };

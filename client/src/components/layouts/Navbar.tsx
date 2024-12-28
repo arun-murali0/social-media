@@ -6,7 +6,7 @@ import MobileNavbar from '@/components/layouts/MobileNvabr';
 const Navbar = () => {
 	return (
 		<>
-			<div className="p-5 rounded-md sticky mx-20 my-2 shadow-sm">
+			<div className="p-5 rounded-md sticky md:mx-20 md:my-2 shadow-sm">
 				<div className="flex justify-between items-center">
 					<div className="text-xl text-blue-600">
 						<Link href="/">SociaPedia</Link>

@@ -3,18 +3,27 @@ import { Button } from '@/components/ui/button';
 import InputLayout from '@/components/layouts/InputLayout';
 import { useForm } from 'react-hook-form';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { useMutateData } from '@/hooks/usefetchData';
+import { apiServices } from '@/services/apiMethods';
+import { useRouter } from '@tanstack/react-router';
 
 import { Link } from '@tanstack/react-router';
 import { userSchema } from '@/utils/validation/userSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-interface meth {
+interface authFormProp {
 	type?: string | undefined;
 }
 
-const AuthForm = ({ type }: meth) => {
-	const authForm = userSchema('');
+const AuthForm = ({ type }: authFormProp) => {
+	const { latestLocation } = useRouter();
+
+	// getting pathname from url
+	const formType: string = latestLocation.pathname === 'sign-in' ? 'sign-in' : 'sign-up';
+
+	const authForm = userSchema(formType);
+
 	const form = useForm<z.infer<typeof authForm>>({
 		resolver: zodResolver(userSchema('')),
 		defaultValues: {
@@ -25,8 +34,11 @@ const AuthForm = ({ type }: meth) => {
 		},
 	});
 
-	const onSubmit = (data: any) => {
-		console.log(data);
+	const onSubmit = (userDetails: typeof authForm) => {
+		try {
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (

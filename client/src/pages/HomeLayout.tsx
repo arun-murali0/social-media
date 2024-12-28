@@ -5,7 +5,7 @@ import Search from '@/components/layouts/Search';
 
 const HomeLayout = () => {
 	return (
-		<section className="mx-20 my-5">
+		<section className="md:mx-20 my-5 max-sm:px-2 max-md:px-3">
 			<div className="grid md:grid-cols-4 gap-2 max-sm:grid-cols-1">
 				<div>
 					<UserProfile />

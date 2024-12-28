@@ -6,7 +6,7 @@ import { Button } from '../ui/button';
 const content = () => {
 	return (
 		<>
-			<Card className="py-6 px-4 max-h-fit">
+			<Card className="py-6 px-4 h-fit">
 				<div className="flex flex-col gap-5">
 					<div className="flex justify-between items-center">
 						<div className="flex items-center gap-3">

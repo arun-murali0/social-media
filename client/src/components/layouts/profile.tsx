@@ -16,12 +16,14 @@ const profile = () => {
 							<AvatarFallback>A</AvatarFallback>
 						</Avatar>
 						<span>
-							<p>Name</p>
-							<p>total friends:0</p>
+							<p className="font-light">Name</p>
+							<p className="text-sm">
+								Total Friends:<span className="font-semibold mx-1">0</span>
+							</p>
 						</span>
 					</div>
 					<div>
-						<Button variant={'ghost'} className='rounded-full' >
+						<Button variant={'ghost'} className="rounded-full">
 							<UserPlus />
 						</Button>
 					</div>
@@ -32,13 +34,13 @@ const profile = () => {
 						<span className="mx-2">
 							<MapPin />
 						</span>
-						<span>Some where in Earth</span>
+						<span className='text-muted-foreground'>Some where in Earth</span>
 					</div>
 					<div className="my-2 flex">
 						<span className="mx-2">
 							<Briefcase />
 						</span>
-						<span>Doing some work</span>
+						<span className='text-muted-foreground'>Doing some work</span>
 					</div>
 				</div>
 				<Separator />

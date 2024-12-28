@@ -4,7 +4,7 @@ import {
 	QueryKey,
 	QueryFunction,
 	QueryOptions,
-	QueryClient,
+	useQueryClient,
 	UseQueryResult,
 	UseMutationResult,
 } from '@tanstack/react-query';
@@ -37,7 +37,7 @@ export const mutateData = <T, V>({
 	queryKey,
 	onSuccess,
 }: mutationProps<T, V>): UseMutationResult<T, unknown, V, unknown> => {
-	const queryClient = new QueryClient();
+	const queryClient = useQueryClient();
 
 	const mutate = useMutation<T, unknown, V>({
 		mutationFn: mutationFn,
