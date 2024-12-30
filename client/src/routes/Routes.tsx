@@ -7,13 +7,6 @@ import LazyLayout from '../components/layouts/RouterLayout';
 const App = lazy(() => import('../App'));
 const AuthForm = lazy(() => import('../pages/auth'));
 
-// Protected route wrapper
-// const protectedRouteIndex = createRoute({
-// 	getParentRoute: () => rootRoute,
-// 	path: '/protected',
-// 	component: () => <ProtectedRoutes />,
-// });
-
 // Home route (nested under /protected)
 const indexRoute = createRoute({
 	getParentRoute: () => rootRoute,

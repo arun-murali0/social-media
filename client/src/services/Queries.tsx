@@ -22,7 +22,11 @@ interface mutationProps<T, V> {
 	shouldInvalidation: boolean | ((data: T) => boolean);
 }
 
-export const fetchDataQuery = <T,>({ options, queryFn, queryKeys }: queryProps<T>): UseQueryResult => {
+export const fetchDataQuery = <T,>({
+	options,
+	queryFn,
+	queryKeys,
+}: queryProps<T>): UseQueryResult => {
 	const result = useQuery({
 		queryKey: queryKeys,
 		queryFn: queryFn,
@@ -48,6 +52,7 @@ export const mutateData = <T, V>({
 				if (shouldInvalidateResult) {
 					queryClient.invalidateQueries({ queryKey });
 				}
+
 				if (onSuccess) {
 					onSuccess(data);
 				}

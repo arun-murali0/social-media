@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
+import { toast } from 'sonner';
 
 const axiosInstance = axios.create({ baseURL: 'http://localhost:4000' });
 
@@ -33,9 +34,12 @@ export const apiServices = async <T,>({
 				break;
 		}
 
-		return response;
+		return response.data;
 	} catch (error) {
-		console.error(error);
-		throw error;
+		const axiosError = error as AxiosError;
+		// Extract backend error message if available
+		const serverResponseError = axiosError.response?.data?.error;
+		const errorMessage = serverResponseError || axiosError.message || 'An error occurred';
+		toast(errorMessage);
 	}
 };

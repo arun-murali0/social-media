@@ -11,6 +11,7 @@ import { Link } from '@tanstack/react-router';
 import { userSchema } from '@/utils/validation/userSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { toast } from 'sonner';
 
 interface authFormProp {
 	type?: string | undefined;
@@ -23,9 +24,10 @@ const AuthForm = ({ type }: authFormProp) => {
 	const formType: string = latestLocation.pathname === 'sign-in' ? 'sign-in' : 'sign-up';
 
 	const authForm = userSchema(formType);
+	type AuthData = z.infer<typeof authForm>;
 
-	const form = useForm<z.infer<typeof authForm>>({
-		resolver: zodResolver(userSchema('')),
+	const form = useForm<AuthData>({
+		resolver: zodResolver(authForm),
 		defaultValues: {
 			firstName: '',
 			lastName: '',
@@ -34,10 +36,36 @@ const AuthForm = ({ type }: authFormProp) => {
 		},
 	});
 
-	const onSubmit = (userDetails: typeof authForm) => {
+	// custom hook for registration and login
+	const { isPending, mutateAsync } = useMutateData<unknown, AuthData>({
+		mutateFn: async (userDetails: unknown): Promise<unknown> => {
+			const response = await apiServices({
+				endpointsMethods: 'post',
+				urlEndpointsAddress: formType === '/sign-up' ? '/sign-up' : '/sign-in',
+				data: userDetails,
+			});
+
+			if (response?.success === true) {
+				if (formType === 'sign-in') {
+					toast('Login successfull');
+				}
+				if (formType === 'sign-up') {
+					toast('registration successfull');
+				}
+			}
+
+			return response;
+		},
+		queryKey: ['users'],
+		shouldInvalidation: true,
+	});
+
+	// submitting the data
+	const onSubmit = async (userDetails: AuthData) => {
 		try {
-		} catch (error) {
-			console.log(error);
+			await mutateAsync(userDetails);
+		} catch (error: any) {
+			toast(error.message);
 		}
 	};
 
@@ -83,7 +111,9 @@ const AuthForm = ({ type }: authFormProp) => {
 							/>
 						</CardContent>
 						<CardFooter className="flex flex-col gap-2">
-							<Button className="w-full">submit</Button>
+							<Button disabled={isPending} className="w-full">
+								submit
+							</Button>
 							<div>
 								<span className="max-md:text-sm">
 									{type === 'sign-up' ? 'Already have an account ?' : 'New User ?'}
