@@ -18,7 +18,7 @@ interface authFormProp {
 }
 
 const AuthForm = ({ type }: authFormProp) => {
-	const { latestLocation } = useRouter();
+	const { latestLocation, navigate } = useRouter();
 
 	// getting pathname from url
 	const formType: string = latestLocation.pathname === 'sign-in' ? 'sign-in' : 'sign-up';
@@ -48,9 +48,11 @@ const AuthForm = ({ type }: authFormProp) => {
 			if (response?.success === true) {
 				if (formType === 'sign-in') {
 					toast('Login successfull');
+					navigate({ to: '/home' });
 				}
 				if (formType === 'sign-up') {
 					toast('registration successfull');
+					navigate({ to: '/home' });
 				}
 			}
 
