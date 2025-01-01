@@ -57,7 +57,6 @@ const AuthForm = ({ type }: authFormProp) => {
 					navigate({ to: '/home' });
 				}
 			}
-
 			return response;
 		},
 		queryKey: ['users'],

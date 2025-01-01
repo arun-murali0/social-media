@@ -25,15 +25,15 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
 		// set Cookies for access token
 		res.cookie('accessToken', token.accessToken, {
 			// httpOnly: true,
-			// secure: config.NODE_ENV === 'production',
+			secure: config.NODE_ENV === 'production' ? true : false,
 			sameSite: config.NODE_ENV === 'production' ? 'none' : 'strict',
 			maxAge: 15 * 60 * 60 * 1000,
 		});
 
 		// set cookies for refresh token
 		res.cookie('refreshToken', token.refreshToken, {
-			// httpOnly: true,
-			// secure: config.NODE_ENV === 'production',
+			httpOnly: true,
+			secure: config.NODE_ENV === 'production' ? true : false,
 			sameSite: config.NODE_ENV === 'production' ? 'none' : 'strict',
 			maxAge: 3 * 24 * 60 * 60 * 1000,
 		});
