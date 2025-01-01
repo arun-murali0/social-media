@@ -1,7 +1,7 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { toast } from 'sonner';
 
-const axiosInstance = axios.create({ baseURL: 'http://localhost:4000' });
+const axiosInstance = axios.create({ baseURL: 'http://localhost:4001' });
 
 interface apiServicesProps {
 	id?: string;
@@ -21,19 +21,18 @@ export const apiServices = async <T,>({
 		let response: AxiosResponse<T>;
 		switch (endpointsMethods) {
 			case 'post':
-				response = await axiosInstance.post<T>(url, data);
+				response = await axiosInstance.post<T>(url, data, { withCredentials: true });
 				break;
 			case 'put':
-				response = await axiosInstance.put<T>(url, data);
+				response = await axiosInstance.put<T>(url, data, { withCredentials: true });
 				break;
 			case 'delete':
-				response = await axiosInstance.delete<T>(url);
+				response = await axiosInstance.delete<T>(url, { withCredentials: true });
 				break;
 			default:
-				response = await axiosInstance.get<T>(url);
+				response = await axiosInstance.get<T>(url, { withCredentials: true });
 				break;
 		}
-
 		return response.data;
 	} catch (error) {
 		const axiosError = error as AxiosError;

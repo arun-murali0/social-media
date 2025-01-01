@@ -22,7 +22,7 @@ export const createNewUser = async (req: Request, res: Response, next: NextFunct
 
 			// set Cookie
 			res.cookie('accessToken', token.accessToken, {
-				httpOnly: true,
+				// httpOnly: true,
 				maxAge: 15 * 50 * 60 * 1000,
 				secure: config.NODE_ENV === 'production',
 				sameSite: config.NODE_ENV === 'production' ? 'strict' : 'none',
@@ -30,7 +30,7 @@ export const createNewUser = async (req: Request, res: Response, next: NextFunct
 
 			// set Cookie
 			res.cookie('refreshToken', token.refreshToken, {
-				httpOnly: true,
+				// httpOnly: true,
 				maxAge: 3 * 24 * 50 * 60 * 1000,
 				secure: config.NODE_ENV === 'production',
 				sameSite: config.NODE_ENV === 'production' ? 'strict' : 'none',
@@ -39,7 +39,6 @@ export const createNewUser = async (req: Request, res: Response, next: NextFunct
 			res.status(200).json({ success: true, message: 'user created successfully' });
 		}
 	} catch (error) {
-		console.error({ error: error.message });
 		next(error);
 		return;
 	}

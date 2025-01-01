@@ -21,7 +21,9 @@ const AuthForm = ({ type }: authFormProp) => {
 	const { latestLocation, navigate } = useRouter();
 
 	// getting pathname from url
-	const formType: string = latestLocation.pathname === 'sign-in' ? 'sign-in' : 'sign-up';
+	const formType = latestLocation.pathname === '/sign-in' ? 'sign-in' : 'sign-up';
+
+	const formTypeEndpoints = latestLocation.pathname === '/sign-in' ? '/sign-in' : '/sign-up';
 
 	const authForm = userSchema(formType);
 	type AuthData = z.infer<typeof authForm>;
@@ -41,16 +43,16 @@ const AuthForm = ({ type }: authFormProp) => {
 		mutateFn: async (userDetails: unknown): Promise<unknown> => {
 			const response = await apiServices({
 				endpointsMethods: 'post',
-				urlEndpointsAddress: formType === '/sign-up' ? '/sign-up' : '/sign-in',
+				urlEndpointsAddress: '/sign-in',
 				data: userDetails,
 			});
 
 			if (response?.success === true) {
-				if (formType === 'sign-in') {
+				if (formTypeEndpoints === '/sign-in') {
 					toast('Login successfull');
 					navigate({ to: '/home' });
 				}
-				if (formType === 'sign-up') {
+				if (formTypeEndpoints === '/sign-up') {
 					toast('registration successfull');
 					navigate({ to: '/home' });
 				}
