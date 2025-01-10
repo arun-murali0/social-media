@@ -20,10 +20,12 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
 			throw new customError(400, 'Please check the password');
 		}
 
-		const token = generateToken(user._id!);
+		const access_Token = generateToken.accessToken(user._id!);
+		const refresh_Token = generateToken.accessToken(user._id!);
+
 
 		// set Cookies for access token
-		res.cookie('accessToken', token.accessToken, {
+		res.cookie('accessToken', access_Token, {
 			// httpOnly: true,
 			secure: config.NODE_ENV === 'production' ? true : false,
 			sameSite: config.NODE_ENV === 'production' ? 'none' : 'strict',
@@ -31,7 +33,7 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
 		});
 
 		// set cookies for refresh token
-		res.cookie('refreshToken', token.refreshToken, {
+		res.cookie('refreshToken', refresh_Token, {
 			httpOnly: true,
 			secure: config.NODE_ENV === 'production' ? true : false,
 			sameSite: config.NODE_ENV === 'production' ? 'none' : 'strict',

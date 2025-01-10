@@ -18,10 +18,11 @@ export const createNewUser = async (req: Request, res: Response, next: NextFunct
 
 			await userServices.newUser(user);
 
-			const token = generateToken(user._id);
+			const access_Token = generateToken.accessToken(user._id);
+			const refresh_Token = generateToken.refreshToken(user._id);
 
 			// set Cookie
-			res.cookie('accessToken', token.accessToken, {
+			res.cookie('accessToken', access_Token, {
 				// httpOnly: true,
 				maxAge: 15 * 50 * 60 * 1000,
 				secure: config.NODE_ENV === 'production',
@@ -29,7 +30,7 @@ export const createNewUser = async (req: Request, res: Response, next: NextFunct
 			});
 
 			// set Cookie
-			res.cookie('refreshToken', token.refreshToken, {
+			res.cookie('refreshToken', refresh_Token, {
 				// httpOnly: true,
 				maxAge: 3 * 24 * 50 * 60 * 1000,
 				secure: config.NODE_ENV === 'production',

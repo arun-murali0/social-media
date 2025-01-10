@@ -1,8 +1,17 @@
+import { useQueryData } from './hooks/useFetchData';
+import { ApiEndpointsSerices } from './services/apiEndpoints';
 
 const App = () => {
-	return (
-		<div>App</div>
-	)
-}
+	const { data, isLoading } = useQueryData({
+		queryKeys: ['user'],
+		queryFn: () => ApiEndpointsSerices.getHome,
+	});
 
-export default App
+	if (isLoading) {
+		console.log('Loading........');
+	}
+
+	return <div>{JSON.stringify(data)}</div>;
+};
+
+export default App;
