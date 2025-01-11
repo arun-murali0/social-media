@@ -43,13 +43,15 @@ export const mutateData = <T, V>({
 			if (onSuccess) {
 				onSuccess(data);
 			}
-			if (queryKey) {
-				queryClient.invalidateQueries({ queryKey });
-			}
 		},
 		onError: (error) => {
 			if (onError) {
 				onError(error);
+			}
+		},
+		onSettled() {
+			if (queryKey) {
+				queryClient.invalidateQueries({ queryKey });
 			}
 		},
 	});
