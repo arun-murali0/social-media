@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
 	return (
-		<nav className="p-2 sm:p-5 border-b-2 sticky top-0  w-full">
+		<nav className="p-2 sm:p-5 shadow sticky top-0  w-full">
 			<div className="sm:mx-20 flex items-center justify-between max-sm:mx-0">
 				<div className="text-lg text-primary sm:text-xl">
 					<Link href="/">SociaPedia</Link>
