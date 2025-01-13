@@ -1,6 +1,11 @@
-import { config } from './config';
-import { app } from './app';
+import { serve } from '@hono/node-server';
+import { Hono } from 'hono';
+import router from './routes/index.js';
 
-app.listen(config.PORT, () => {
-	console.log(`server running in http://localhost:${config.PORT}`);
-});
+const app = new Hono();
+
+app.route('/', router);
+
+console.log('server running');
+
+serve(app);

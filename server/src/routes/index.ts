@@ -1,26 +1,10 @@
-import { Request, Response, Router } from 'express';
-import { createNewUser, userLogin, userLogOut, verifyUser, resetPassword } from '../controller';
+import { Hono } from 'hono';
+import userRouter from './userRouter.js';
+import appRouter from './appRouter.js';
 
-// middleware
-// import { protectedRoutes } from '../middleware/user-auth';
+const app = new Hono().basePath('/api');
 
-// schema
-import { validateSchema } from '../middleware/input-validation';
-import { loginSchema } from '../utils/validation/login-schema';
+app.route('/auth', userRouter);
+app.route('/app', appRouter);
 
-const router = Router();
-
-// user Routes
-router.post('/sign-up', createNewUser);
-router.post('/sign-in', validateSchema(loginSchema), userLogin);
-router.post('/verify-otp', verifyUser);
-
-router.get('/home', (_req: Request, res: Response) => {
-	return res.status(200).json({ message: 'hello world' });
-});
-
-// protected user Routes
-router.post('/sign-out', userLogOut);
-router.post('/reset-password',  resetPassword);
-
-export default router;
+export default app;
