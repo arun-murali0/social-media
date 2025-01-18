@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const Config = {
-	JWT_SECRET: process.env.JWT_SECRET,
+export const config = {
+	PORT: process.env.PORT || 3000,
+	MONGO_STRING: process.env.MONGO_STRING,
 };

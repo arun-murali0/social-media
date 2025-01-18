@@ -1,10 +1,10 @@
-import { Hono } from 'hono';
-import userRouter from './userRouter.js';
-import appRouter from './appRouter.js';
+import { Router } from 'express';
+import userRoutes from './user';
+import appRoutes from './app';
 
-const app = new Hono().basePath('/api');
+const router = Router();
 
-app.route('/auth', userRouter);
-app.route('/app', appRouter);
+router.use('/api/auth', userRoutes);
+router.use('/api', appRoutes);
 
-export default app;
+export default router;
